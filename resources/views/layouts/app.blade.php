@@ -11,8 +11,9 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-        <!-- Correction : Remplacement de @vite par le CDN Tailwind CSS officiel pour éviter l'erreur de manifeste dans l'espace connecté -->
-        <script src="https://tailwindcss.com"></script>
+        <!-- Styles d'intégration pour le design -->
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link href="https://jsdelivr.net" rel="stylesheet">
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
@@ -29,7 +30,11 @@
 
             <!-- Page Content -->
             <main>
-                {{ $slot }}
+                @if(isset($slot))
+                    {{ $slot }}
+                @endif
+                
+                @yield('content')
             </main>
         </div>
     </body>
