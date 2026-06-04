@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory; // <-- AJOUTÉ : Import indispensable
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Student extends Model
 {
-    // C'est ici : comme votre contrôleur utilise 'photo_path', on garde cette colonne
+    use HasFactory; // <-- AJOUTÉ : Activation des factories
+
     protected $fillable = ['classroom_id', 'first_name', 'last_name', 'photo_path'];
 
     public function classroom(): BelongsTo
@@ -32,10 +34,9 @@ class Student extends Model
         return $average ? round($average, 2) : 'N/A';
     }
 
-    // Ajout de cette fonction indispensable pour calculer la somme des versements de cet élève
     public function totalPaid()
     {
-        return $this->payments()->sum('amount_paid');
+        return $this->payments()->sum('amount_paid'); // <-- Note : utilise la colonne amount_paid
     }
 
     public function tuitionStatus()

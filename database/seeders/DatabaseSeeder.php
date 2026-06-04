@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Création du compte Gestionnaire par défaut
+        // 1. Création des comptes utilisateurs de l'UKZ
         User::create([
             'name' => 'Gestionnaire UKZ',
             'email' => 'gestion@ukz.bf',
@@ -24,12 +24,18 @@ class DatabaseSeeder extends Seeder
             'role' => 'gestionnaire',
         ]);
 
-        // Création du compte Enseignant par défaut
         User::create([
             'name' => 'Enseignant UKZ',
             'email' => 'prof@ukz.bf',
             'password' => Hash::make('password'),
             'role' => 'enseignant',
+        ]);
+
+        // 2. Appel des seeders structurels et de génération de données scolaires
+        $this->call([
+            ClassroomSeeder::class, // Génère les classes (CP1 à CM2)
+            SubjectSeeder::class,   // Génère les matières
+            StudentSeeder::class,   // Génère les élèves, les notes et les paiements
         ]);
     }
 }
