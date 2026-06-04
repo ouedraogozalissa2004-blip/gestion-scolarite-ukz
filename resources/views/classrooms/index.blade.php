@@ -62,9 +62,12 @@
                         </a>
                     </td>
                     <td>{{ number_format($classroom->tuition_fee, 0, ',', ' ') }} FCFA</td>
+                    
+                    <!-- Correction : Suppression du "/ 20" écrit en dur car le modèle Classroom fournit déjà son barème sur 10 -->
                     <td>
-                        <strong>{{ $classroom->classroomAverage() }}</strong> / 20
+                        <strong>{{ $classroom->classroomAverage() }}</strong>
                     </td>
+                    
                     <td>
                         <a href="{{ route('classrooms.edit', $classroom->id) }}" class="btn btn-edit">Modifier</a>
                         <form action="{{ route('classrooms.destroy', $classroom->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Supprimer cette classe ?');">
