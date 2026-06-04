@@ -46,7 +46,8 @@
                 <th>Élève</th>
                 <th>Classe</th> <!-- Nouvelle colonne ajoutée -->
                 <th>Matière</th>
-                <th>Note / 20</th>
+                <!-- MODIFIÉ ICI : Note / 10 -->
+                <th>Note / 10</th>
                 <th>Trimestre</th>
                 <th>Actions</th>
             </tr>
@@ -62,7 +63,8 @@
                         </span>
                     </td>
                     <td>{{ $grade->subject->name ?? 'Inconnue' }}</td>
-                    <td><strong>{{ $grade->score }}</strong> / 20</td>
+                    <!-- MODIFIÉ ICI : Affichage / 10 -->
+                    <td><strong>{{ $grade->score }}</strong> / 10</td>
                     <td>Trimestre {{ $grade->quarter }}</td>
                     <td>
                         <a href="{{ route('grades.edit', $grade->id) }}" class="btn btn-edit">Modifier</a>

@@ -28,7 +28,7 @@ class GradeController extends Controller
         $validated = $request->validate([
             'student_id' => 'required|exists:students,id',
             'subject_id' => 'required|exists:subjects,id',
-            'score'      => 'required|numeric|min:0|max:20',
+            'score'      => 'required|numeric|min:0|max:10', // Modifié ici : max 10
             'quarter'    => 'required|integer|between:1,3',
         ]);
         
@@ -46,7 +46,7 @@ class GradeController extends Controller
         $validated = $request->validate([
             'student_id' => 'required|exists:students,id',
             'subject_id' => 'required|exists:subjects,id',
-            'score'      => 'required|numeric|min:0|max:20',
+            'score'      => 'required|numeric|min:0|max:10', // Modifié ici : max 10
             'quarter'    => 'required|integer|between:1,3',
         ]);
         

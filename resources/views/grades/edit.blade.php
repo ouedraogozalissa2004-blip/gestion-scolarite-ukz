@@ -51,8 +51,9 @@
         </div>
 
         <div class="form-group">
-            <label for="score">Note (Sur 20)</label>
-            <input type="number" name="score" id="score" value="{{ $grade->score }}" min="0" max="20" step="0.25" required>
+            <!-- MODIFIÉ ICI : Changement du texte (Sur 10) et du max="10" -->
+            <label for="score">Note (Sur 10)</label>
+            <input type="number" name="score" id="score" value="{{ $grade->score }}" min="0" max="10" step="0.25" required>
         </div>
 
         <button type="submit" class="btn btn-submit">Mettre à jour</button>
