@@ -44,10 +44,10 @@
         <thead>
             <tr>
                 <th>Élève</th>
-                <th>Classe</th> <!-- Nouvelle colonne ajoutée -->
+                <th>Classe</th> 
                 <th>Matière</th>
-                <!-- MODIFIÉ ICI : Note / 10 -->
-                <th>Note / 10</th>
+                <!-- Correction : Titre de colonne générique car les barèmes diffèrent -->
+                <th>Note / Barème</th>
                 <th>Trimestre</th>
                 <th>Actions</th>
             </tr>
@@ -57,14 +57,22 @@
                 <tr>
                     <td>{{ $grade->student->first_name ?? '' }} {{ $grade->student->last_name ?? 'Inconnu' }}</td>
                     <td>
-                        <!-- Affichage magique de la classe de l'élève -->
                         <span style="font-weight: bold; color: #0056b3;">
                             {{ $grade->student->classroom->name ?? 'Non définie' }}
                         </span>
                     </td>
                     <td>{{ $grade->subject->name ?? 'Inconnue' }}</td>
-                    <!-- MODIFIÉ ICI : Affichage / 10 -->
-                    <td><strong>{{ $grade->score }}</strong> / 10</td>
+                    
+                    <!-- Correction : Affichage dynamique du barème selon la classe de l'élève -->
+                    <td>
+                        <strong>{{ number_format($grade->score, 2, '.', '') }}</strong>
+                        @if(in_array($grade->student->classroom->name ?? '', ['CP1', 'CP2', 'CE1', 'CE2']))
+                            / 10
+                        @else
+                            / 20
+                        @endif
+                    </td>
+                    
                     <td>Trimestre {{ $grade->quarter }}</td>
                     <td>
                         <a href="{{ route('grades.edit', $grade->id) }}" class="btn btn-edit">Modifier</a>

@@ -32,13 +32,25 @@ class StudentSeeder extends Seeder
                 ]);
             }
 
-            // 3. Attribuer des notes pour chaque matière liée à sa classe
+            // 3. Déterminer le barème de notation selon la classe
+            // Récupère le nom de la classe (ex: CP1, CM2)
+            $className = $student->classroom->name ?? ''; 
+            
+            if (in_array($className, ['CP1', 'CP2', 'CE1', 'CE2'])) {
+                $maxScore = 10; // Note sur 10 pour le cours préparatoire et élémentaire
+                $minScore = 5;
+            } else {
+                $maxScore = 20; // Note sur 20 pour le cours moyen (CM1, CM2)
+                $minScore = 9;
+            }
+
+            // 4. Attribuer des notes réalistes selon le barème de la classe
             foreach ($subjects as $subject) {
                 Grade::create([
                     'student_id' => $student->id,
                     'subject_id' => $subject->id,
-                    'score' => rand(8, 19),       
-                    'quarter' => 1, // <-- Corrigé ici : quarter à la place de term
+                    'score' => rand($minScore, $maxScore), // Génère la bonne note selon la classe
+                    'quarter' => 1,       
                 ]);
             }
         });

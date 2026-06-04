@@ -45,7 +45,7 @@
     <table>
         <thead>
             <tr>
-                <th>Photo</th> <!-- Correction : Ajout de l'en-tête photo -->
+                <th>Photo</th> 
                 <th>Prénom</th>
                 <th>Nom</th>
                 <th>Classe</th>
@@ -56,18 +56,21 @@
         <tbody>
             @foreach($students as $student)
                 <tr>
-                    <!-- Correction : Ajout de la cellule pour afficher la photo ou l'icône par défaut -->
+                    <!-- Correction affichage photo / avatar -->
                     <td style="text-align: center; width: 60px;">
-                        @if($student->photo_path)
+                        @if($student->photo_path && file_exists(public_path('storage/' . $student->photo_path)))
                             <img src="{{ asset('storage/' . $student->photo_path) }}" alt="Photo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 1px solid #ccc;">
                         @else
-                            <span style="font-size: 24px;">👤</span>
+                            <span style="font-size: 20px; display: block;">👤 Photo</span>
                         @endif
                     </td>
                     <td>{{ $student->first_name }}</td>
                     <td>{{ $student->last_name }}</td>
                     <td>{{ $student->classroom->name ?? 'Non définie' }}</td>
-                    <td><strong>{{ $student->averageScore() }}</strong> / 20</td>
+                    
+                    <!-- Correction : Suppression du "/ 20" écrit en dur car le modèle fournit déjà le bon barème sur 10 -->
+                    <td><strong>{{ $student->averageScore() }}</strong></td>
+                    
                     <td>
                         <!-- Bouton d'accès au Bulletin -->
                         <a href="{{ route('students.report_card', $student->id) }}" class="btn btn-report">Bulletin</a>

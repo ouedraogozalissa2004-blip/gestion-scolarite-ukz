@@ -30,8 +30,25 @@ class Student extends Model
 
     public function averageScore()
     {
+        // 1. Calculer la moyenne brute des notes de l'élève
         $average = $this->grades()->avg('score');
-        return $average ? round($average, 2) : 'N/A';
+        
+        if (!$average) {
+            return 'N/A';
+        }
+
+        // 2. Récupérer le nom de la classe (ex: CP1, CM2)
+        $className = $this->classroom->name ?? '';
+
+        // 3. Adapter le calcul pour que la moyenne finale soit toujours sur 10
+        if (in_array($className, ['CP1', 'CP2', 'CE1', 'CE2'])) {
+            // Déjà noté sur 10, on garde la valeur brute
+            return round($average, 2) . ' / 10';
+        } else {
+            // Noté sur 20 (CM1, CM2), on divise par 2 pour ramener la moyenne générale sur 10
+            $moyenneSurDix = $average / 2;
+            return round($moyenneSurDix, 2) . ' / 10';
+        }
     }
 
     public function totalPaid()
